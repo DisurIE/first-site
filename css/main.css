@@ -198,7 +198,7 @@ body {
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
-    row-gap: 80px;
+    row-gap: 0px;
   }
   .home-body__text {
     max-width: 445px;
@@ -207,9 +207,10 @@ body {
     text-align: center;
   }
   .explore {
-    margin-top: 0px;
+    margin-top: 0 20px;
     width: 242px;
     height: 242px;
+    margin-top: 156px;
   }
   h5 {
     font-size: 20px;
