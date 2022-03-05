@@ -241,7 +241,7 @@ body {
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 492px) {
   .home-header {
     margin-left: 0;
   }
@@ -491,7 +491,8 @@ body {
     height: 300px;
   }
   .destination__desc {
-    width: 573px;
+    width: 100%;
+    max-width: 573px;
     -webkit-box-align: center;
     -webkit-align-items: center;
         -ms-flex-align: center;
@@ -502,7 +503,8 @@ body {
   }
   .destination .headers-typography__title {
     text-align: center;
-    width: 573px;
+    max-width: 573px;
+    width: 100%;
     font-weight: normal;
     font-size: 16px;
     line-height: 28px;
