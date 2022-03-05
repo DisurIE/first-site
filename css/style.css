@@ -410,6 +410,7 @@ h5 {
 
 .interactive__tab:before {
   content: "";
+  display: inline-block;
   position: absolute;
   top: -10%;
   left: 0;
