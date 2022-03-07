@@ -13,9 +13,9 @@ function delegateTabsActive(nameTab, tabs, e){
     tabs.forEach(tab =>{
         tab.addEventListener( e, () => {
             tabs.forEach(tab =>{
-                if(tab.classList.contains(`${nameTab}_active`)){
+                
                     tab.classList.remove(`${nameTab}_active`);
-                }
+                
             });
            tab.classList.add(`${nameTab}_active`);
         });
@@ -25,9 +25,9 @@ function tabEvents(nameTab,tabs){
     tabs.forEach(tab =>{
         
         tab.addEventListener( "mouseover", () => {
-            
+            if(!tab.classList.contains(`${nameTab}_active`)){
            tab.classList.add(`${nameTab}_hover`);
-            
+            }
         });
         tab.addEventListener( "mouseout", () => {
             
@@ -37,8 +37,8 @@ function tabEvents(nameTab,tabs){
     });
     delegateTabsActive(nameTab, tabs, 'click');
 }
-//tabEvents(navTabClass,navtabs);
-//tabEvents(TabClass, tabs);
+tabEvents(navTabClass,navtabs);
+tabEvents(TabClass, tabs);
 tabEvents(sliderClass, sliders);
 tabEvents(bigSliderClass, bigSliders);
 
@@ -128,3 +128,60 @@ const        tabsContentIMG = document.querySelectorAll('.destination__planet'),
             });
         }
     });
+
+// BURGER===============================================================================================================
+    const burger = document.querySelector('.menu__icon'),
+          menu = document.querySelector('.nav-interactive');
+
+        burger.addEventListener('click',  () => {
+            menu.classList.toggle('look');
+            burger.classList.toggle('close');
+        });
+
+
+
+        const        slidersContentIMG = document.querySelectorAll('.crew__douglas'),
+        slidersContent = document.querySelectorAll('.crew__target'),
+        slidersParent = document.querySelector('.interactive__sliders');
+     
+
+
+   function hibeTabContent(){
+       slidersContent.forEach(item =>{
+           item.classList.add('hidden');
+           
+       });
+       slidersContentIMG.forEach(item =>{
+           item.classList.add('hidden');
+           
+       });
+       sliders.forEach(item =>{
+           item.classList.remove('interactive__slider_active');
+       });
+   }   
+   function shoyTabContent(i = 0){
+       slidersContent[i].classList.remove('hidden');
+       slidersContentIMG[i].classList.remove('hidden');
+       sliders[i].classList.add('interactive__slider_active');
+   }
+
+   hibeTabContent();
+   shoyTabContent();
+
+
+  
+   slidersParent.addEventListener('click', (event)=>{
+           const target = event.target;
+
+           if(target && target.classList.contains('interactive__slider')){
+               sliders.forEach((item, i) => {
+                   if(target == item){
+                       hibeTabContent();
+                       shoyTabContent(i);
+
+                   }
+                   
+               });
+           }
+       
+   });
