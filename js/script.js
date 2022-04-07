@@ -1,187 +1,104 @@
-    const navTabClass = "nav-interactive__tab";
-    const TabClass = "interactive__tab";
-    const sliderClass = "interactive__slider";
-    const bigSliderClass = "interactive__big-slider";
-
-    const navtabs = document.querySelectorAll(`.${navTabClass}`);
-    const tabs = document.querySelectorAll(`.${TabClass}`);
-    const sliders = document.querySelectorAll(`.${sliderClass}`);
-    const bigSliders = document.querySelectorAll(`.${bigSliderClass}`);
-
-
-function delegateTabsActive(nameTab, tabs, e){
-    tabs.forEach(tab =>{
-        tab.addEventListener( e, () => {
-            tabs.forEach(tab =>{
-                
-                    tab.classList.remove(`${nameTab}_active`);
-                
-            });
-           tab.classList.add(`${nameTab}_active`);
-        });
-    });
-}
-function tabEvents(nameTab,tabs){
-    tabs.forEach(tab =>{
-        
-        tab.addEventListener( "mouseover", () => {
-            if(!tab.classList.contains(`${nameTab}_active`)){
-           tab.classList.add(`${nameTab}_hover`);
-            }
-        });
-        tab.addEventListener( "mouseout", () => {
-            
-            tab.classList.remove(`${nameTab}_hover`);
-         });
-        
-    });
-    delegateTabsActive(nameTab, tabs, 'click');
-}
-tabEvents(navTabClass,navtabs);
-tabEvents(TabClass, tabs);
-tabEvents(sliderClass, sliders);
-tabEvents(bigSliderClass, bigSliders);
-
-//tabClass = tabs
-
-const        tabsContentIMG = document.querySelectorAll('.destination__planet'),
-             tabsContent = document.querySelectorAll('.destination__target'),
-             tabsParent = document.querySelector('.interactive__tabs');
-          
-
-
-        function hideTabContent(){
-            tabsContent.forEach(item =>{
-                item.classList.add('hidden');
-                
-            });
-            tabsContentIMG.forEach(item =>{
-                item.classList.add('hidden');
-                
-            });
-            tabs.forEach(item =>{
-                item.classList.remove('interactive__tab_active');
-            });
-        }   
-        function showTabContent(i = 0){
-            tabsContent[i].classList.remove('hidden');
-            tabsContentIMG[i].classList.remove('hidden');
-            tabs[i].classList.add('interactive__tab_active');
-        }
-
-        hideTabContent();
-        showTabContent();
-
-
-       
-        tabsParent.addEventListener('click', (event)=>{
-                const target = event.target;
+new Swiper('.swiper', {
     
-                if(target && target.classList.contains('interactive__tab')){
-                    tabs.forEach((item, i) => {
-                        if(target == item){
-                            hideTabContent();
-                            showTabContent(i);
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+      },
+      autoplay: {
+        delay: 5000,
+      },
 
-                        }
-                        
-                    });
-                }
-            
+});
+
+new Swiper('.delivery-swiper', {
+    
+    navigation: {
+        nextEl: '.delivery-swiper-button-next',
+        prevEl: '.delivery-swiper-button-prev',
+      },
+      slidesPerGroup: 1,
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'bullets',
+      },
+     loop: true,
+     autoplay: {
+        delay: 3000,
+      },
+     breakpoints: {
+         200: {
+            slidesPerView: 1,
+         },
+         900: {
+            slidesPerView: 2,
+         },
+         1200: {
+            slidesPerView: 3,
+         }
+     },
+
+});
+
+    function outputFiles(){
+        var inputs = document.querySelectorAll('.file__input');
+        Array.prototype.forEach.call(inputs, function( input ){
+            var label = input.nextElementSibling,
+            labelVal = label.innerHTML;
+
+            input.addEventListener('change', function(e){
+                console.log(this.files);
+                var fileName = '';
+                if(this.files && this.files.length > 1)
+                    fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+                else
+                    fileName = this.files[0].name;
+                    
+                    if(fileName)
+                        label.querySelector('span').innerHTML = fileName;
+                    else
+                        label.innerHTML = labelVal;
+            });
         });
-
-   const sasParents = document.querySelector('.home-header'),
-         sasContent = document.querySelectorAll('.page');
-
-//navtabs = tabs
-//navTabClass = tab
-
-     function hiddenContent(){
-            sasContent.forEach(item => {
-                item.classList.add('hidden');
-            });
-
-            navtabs.forEach(item => {
-                item.classList.remove('nav-interactive__tab_active');
-            });
-        }
-
-    function AddContent(i = 0){
-        sasContent[i].classList.remove('hidden');
-        navtabs[i].classList.add('nav-interactive__tab_active');
     }
-        
-    hiddenContent();
-    AddContent();
+document.addEventListener("DOMContentLoaded", outputFiles);
 
-    sasParents.addEventListener('click', (event)=>{
-        const target = event.target;
-
-        if(target && target.classList.contains(navTabClass)){
-            navtabs.forEach((item, i) => {
-                if(target == item){
-                    hiddenContent();
-                    AddContent(i);
-                    console.log("sssssssssssssss");
-                }
-                
+window.addEventListener("DOMContentLoaded", function() {
+    [].forEach.call( document.querySelectorAll('.form-first__text-tel'), function(input) {
+    var keyCode;
+    function mask(event) {
+        event.keyCode && (keyCode = event.keyCode);
+        var pos = this.selectionStart;
+        if (pos < 3) event.preventDefault();
+        var matrix = "+7 (___) ___ ____",
+            i = 0,
+            def = matrix.replace(/\D/g, ""),
+            val = this.value.replace(/\D/g, ""),
+            new_value = matrix.replace(/[_\d]/g, function(a) {
+                return i < val.length ? val.charAt(i++) || def.charAt(i) : a
             });
+        i = new_value.indexOf("_");
+        if (i != -1) {
+            i < 5 && (i = 3);
+            new_value = new_value.slice(0, i)
         }
-    });
+        var reg = matrix.substr(0, this.value.length).replace(/_+/g,
+            function(a) {
+                return "\\d{1," + a.length + "}"
+            }).replace(/[+()]/g, "\\$&");
+        reg = new RegExp("^" + reg + "$");
+        if (!reg.test(this.value) || this.value.length < 5 || keyCode > 47 && keyCode < 58) this.value = new_value;
+        if (event.type == "blur" && this.value.length < 5)  this.value = ""
+    }
 
-// BURGER===============================================================================================================
-    const burger = document.querySelector('.menu__icon'),
-          menu = document.querySelector('.nav-interactive');
+    input.addEventListener("input", mask, false);
+    input.addEventListener("focus", mask, false);
+    input.addEventListener("blur", mask, false);
+    input.addEventListener("keydown", mask, false)
 
-        burger.addEventListener('click',  () => {
-            menu.classList.toggle('look');
-            burger.classList.toggle('close');
-        });
+  });
 
-
-
-        const        slidersContentIMG = document.querySelectorAll('.crew__douglas'),
-        slidersContent = document.querySelectorAll('.crew__target'),
-        slidersParent = document.querySelector('.interactive__sliders');
-     
-
-
-   function hibeTabContent(){
-       slidersContent.forEach(item =>{
-           item.classList.add('hidden');
-           
-       });
-       slidersContentIMG.forEach(item =>{
-           item.classList.add('hidden');
-           
-       });
-       sliders.forEach(item =>{
-           item.classList.remove('interactive__slider_active');
-       });
-   }   
-   function shoyTabContent(i = 0){
-       slidersContent[i].classList.remove('hidden');
-       slidersContentIMG[i].classList.remove('hidden');
-       sliders[i].classList.add('interactive__slider_active');
-   }
-
-   hibeTabContent();
-   shoyTabContent();
-
-
-  
-   slidersParent.addEventListener('click', (event)=>{
-           const target = event.target;
-
-           if(target && target.classList.contains('interactive__slider')){
-               sliders.forEach((item, i) => {
-                   if(target == item){
-                       hibeTabContent();
-                       shoyTabContent(i);
-
-                   }
-                   
-               });
-           }
-       
-   });
+});
